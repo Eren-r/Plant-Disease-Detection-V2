@@ -1,0 +1,32 @@
+[
+  {
+    "image_path": "data_split_grouped_6class\\test\\Tomato_Early_blight\\29645def-a571-4442-8f95-d7ebf71befde___RS_Erly.B 7751.JPG",
+    "actual_class": "Tomato_Early_blight",
+    "predicted_class": "Tomato_healthy",
+    "confidence": 0.5830078125
+  },
+  {
+    "image_path": "data_split_grouped_6class\\test\\Tomato_Early_blight\\803ac166-670f-4cad-9f37-e36eea3118d9___RS_Erly.B 9457.JPG",
+    "actual_class": "Tomato_Early_blight",
+    "predicted_class": "Tomato_Late_blight",
+    "confidence": 0.86669921875
+  },
+  {
+    "image_path": "data_split_grouped_6class\\test\\Tomato_Early_blight\\90c69e4c-c526-4f72-b0b0-4127fc6acb0a___RS_Erly.B 7782.JPG",
+    "actual_class": "Tomato_Early_blight",
+    "predicted_class": "Tomato_healthy",
+    "confidence": 0.849609375
+  },
+  {
+    "image_path": "data_split_grouped_6class\\test\\Tomato_Early_blight\\f0eb00dc-22da-4c8b-b86d-72157ea9e71d___RS_Erly.B 9610.JPG",
+    "actual_class": "Tomato_Early_blight",
+    "predicted_class": "Tomato_Late_blight",
+    "confidence": 0.962890625
+  },
+  {
+    "image_path": "data_split_grouped_6class\\test\\Tomato_Late_blight\\da45101e-9448-4e0c-a735-91c558e60c8f___RS_Late.B 5290.JPG",
+    "actual_class": "Tomato_Late_blight",
+    "predicted_class": "Potato___Late_blight",
+    "confidence": 0.9814453125
+  }
+]

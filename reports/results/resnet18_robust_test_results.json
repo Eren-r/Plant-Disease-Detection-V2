@@ -1,0 +1,105 @@
+{
+  "accuracy": 0.996003996003996,
+  "macro_precision": 0.9961039464002169,
+  "macro_recall": 0.9971467286101432,
+  "macro_f1": 0.996619659410357,
+  "weighted_precision": 0.9960168331726366,
+  "weighted_recall": 0.996003996003996,
+  "weighted_f1": 0.9960036478634159,
+  "per_class": {
+    "Potato___Early_blight": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 150
+    },
+    "Potato___Late_blight": {
+      "precision": 0.9933774834437086,
+      "recall": 1.0,
+      "f1": 0.9966777408637874,
+      "support": 150
+    },
+    "Potato___healthy": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 24
+    },
+    "Tomato_Early_blight": {
+      "precision": 0.9867549668874173,
+      "recall": 0.9933333333333333,
+      "f1": 0.9900332225913622,
+      "support": 150
+    },
+    "Tomato_Late_blight": {
+      "precision": 0.9964912280701754,
+      "recall": 0.9895470383275261,
+      "f1": 0.993006993006993,
+      "support": 287
+    },
+    "Tomato_healthy": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 240
+    }
+  },
+  "class_names": [
+    "Potato___Early_blight",
+    "Potato___Late_blight",
+    "Potato___healthy",
+    "Tomato_Early_blight",
+    "Tomato_Late_blight",
+    "Tomato_healthy"
+  ],
+  "confusion_matrix": [
+    [
+      150,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      150,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      24,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      149,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      2,
+      284,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      240
+    ]
+  ]
+}

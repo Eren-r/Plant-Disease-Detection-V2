@@ -1,0 +1,26 @@
+﻿# Core data / ML
+numpy==2.4.6
+pandas==3.0.6
+scikit-learn==1.9.1
+scipy==1.17.1
+pillow==12.3.0
+matplotlib==3.11.2
+ImageHash==4.3.2
+
+# PyTorch CUDA 12.8
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+torchvision==0.26.0+cu128
+
+# API
+fastapi==0.141.1
+uvicorn==0.53.0
+python-multipart==0.0.32
+
+# Frontend
+streamlit==1.64.0
+requests==2.34.2
+
+# Testing
+pytest==9.1.1
+httpx2==2.13.0

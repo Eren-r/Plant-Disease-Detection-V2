@@ -1,0 +1,1415 @@
+{
+  "model": "EfficientNet-B0",
+  "dataset": "data_split_grouped_6class",
+  "temperature": 0.984268069267273,
+  "validation_samples": 996,
+  "validation_errors": 3,
+  "validation_errors_detail": [
+    {
+      "image_path": "data_split_grouped_6class\\val\\Tomato_Late_blight\\189f8e47-0892-4c82-b0b9-7a51b6c83a04___RS_Late.B 7193.JPG",
+      "actual_class": "Tomato_Late_blight",
+      "predicted_class": "Tomato_Early_blight",
+      "correct": false,
+      "confidence": 0.9970357418060303,
+      "second_confidence": 0.0009092192049138248,
+      "margin": 0.9961265226011164
+    },
+    {
+      "image_path": "data_split_grouped_6class\\val\\Tomato_Late_blight\\44de5100-871f-495d-b4c6-70ab89059a68___RS_Late.B 7043.JPG",
+      "actual_class": "Tomato_Late_blight",
+      "predicted_class": "Tomato_Early_blight",
+      "correct": false,
+      "confidence": 0.9793357253074646,
+      "second_confidence": 0.013036220334470272,
+      "margin": 0.9662995049729943
+    },
+    {
+      "image_path": "data_split_grouped_6class\\val\\Tomato_Late_blight\\8d611dca-11e1-4970-9806-599173ed158d___RS_Late.B 5181.JPG",
+      "actual_class": "Tomato_Late_blight",
+      "predicted_class": "Tomato_Early_blight",
+      "correct": false,
+      "confidence": 0.6983799934387207,
+      "second_confidence": 0.29678863286972046,
+      "margin": 0.40159136056900024
+    }
+  ],
+  "confidence_only": [
+    {
+      "confidence_threshold": 0.6,
+      "reviewed_samples": 1,
+      "review_rate": 0.001004016064257028,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.65,
+      "reviewed_samples": 4,
+      "review_rate": 0.004016064257028112,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.7,
+      "reviewed_samples": 5,
+      "review_rate": 0.0050200803212851405,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.98,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    }
+  ],
+  "margin_only": [
+    {
+      "margin_threshold": 0.05,
+      "reviewed_samples": 0,
+      "review_rate": 0.0,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "margin_threshold": 0.1,
+      "reviewed_samples": 0,
+      "review_rate": 0.0,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "margin_threshold": 0.15,
+      "reviewed_samples": 0,
+      "review_rate": 0.0,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "margin_threshold": 0.2,
+      "reviewed_samples": 0,
+      "review_rate": 0.0,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "margin_threshold": 0.3,
+      "reviewed_samples": 2,
+      "review_rate": 0.002008032128514056,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "margin_threshold": 0.4,
+      "reviewed_samples": 3,
+      "review_rate": 0.0030120481927710845,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "margin_threshold": 0.5,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "margin_threshold": 0.6,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "margin_threshold": 0.7,
+      "reviewed_samples": 9,
+      "review_rate": 0.009036144578313253,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    }
+  ],
+  "combined_rules": [
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 1,
+      "review_rate": 0.001004016064257028,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 1,
+      "review_rate": 0.001004016064257028,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 1,
+      "review_rate": 0.001004016064257028,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 1,
+      "review_rate": 0.001004016064257028,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 2,
+      "review_rate": 0.002008032128514056,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 3,
+      "review_rate": 0.0030120481927710845,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 9,
+      "review_rate": 0.009036144578313253,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.6,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 4,
+      "review_rate": 0.004016064257028112,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 4,
+      "review_rate": 0.004016064257028112,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 4,
+      "review_rate": 0.004016064257028112,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 4,
+      "review_rate": 0.004016064257028112,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 4,
+      "review_rate": 0.004016064257028112,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 4,
+      "review_rate": 0.004016064257028112,
+      "reviewed_errors": 0,
+      "missed_errors": 3,
+      "error_capture_rate": 0.0
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 9,
+      "review_rate": 0.009036144578313253,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.65,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 5,
+      "review_rate": 0.0050200803212851405,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 5,
+      "review_rate": 0.0050200803212851405,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 5,
+      "review_rate": 0.0050200803212851405,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 5,
+      "review_rate": 0.0050200803212851405,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 5,
+      "review_rate": 0.0050200803212851405,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 5,
+      "review_rate": 0.0050200803212851405,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 9,
+      "review_rate": 0.009036144578313253,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.7,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 9,
+      "review_rate": 0.009036144578313253,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.75,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 6,
+      "review_rate": 0.006024096385542169,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 9,
+      "review_rate": 0.009036144578313253,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.8,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 10,
+      "review_rate": 0.010040160642570281,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.85,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 13,
+      "review_rate": 0.013052208835341365,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.9,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 16,
+      "review_rate": 0.01606425702811245,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.92,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 20,
+      "review_rate": 0.020080321285140562,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.95,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 24,
+      "review_rate": 0.024096385542168676,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.97,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 31,
+      "review_rate": 0.03112449799196787,
+      "reviewed_errors": 1,
+      "missed_errors": 2,
+      "error_capture_rate": 0.3333333333333333
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.98,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 40,
+      "review_rate": 0.040160642570281124,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.05,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.1,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.15,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.2,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.3,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.4,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.5,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.6,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.7,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.8,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    },
+    {
+      "confidence_threshold": 0.99,
+      "margin_threshold": 0.9,
+      "reviewed_samples": 53,
+      "review_rate": 0.05321285140562249,
+      "reviewed_errors": 2,
+      "missed_errors": 1,
+      "error_capture_rate": 0.6666666666666666
+    }
+  ],
+  "best_full_capture_rules": []
+}

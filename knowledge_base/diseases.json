@@ -1,0 +1,117 @@
+{
+  "Potato___Early_blight": {
+    "crop": "Potato",
+    "disease": "Early Blight",
+    "status": "diseased",
+    "severity": "moderate_to_high",
+    "symptoms": [
+      "Dark brown to black lesions may appear on older leaves.",
+      "Lesions can develop characteristic concentric ring patterns.",
+      "Yellowing may develop around affected areas.",
+      "Severe infection can cause premature leaf loss."
+    ],
+    "general_management": [
+      "Remove heavily affected plant material where practical.",
+      "Maintain good field sanitation.",
+      "Improve air circulation around plants.",
+      "Avoid prolonged leaf wetness and unnecessary overhead irrigation.",
+      "Monitor nearby plants for progression."
+    ],
+    "advisory": "Use the prediction as a screening aid and confirm severe or uncertain cases with an agricultural expert."
+  },
+
+  "Potato___Late_blight": {
+    "crop": "Potato",
+    "disease": "Late Blight",
+    "status": "diseased",
+    "severity": "high",
+    "symptoms": [
+      "Irregular dark lesions may develop on leaves.",
+      "Affected tissue can appear water-soaked under favorable conditions.",
+      "Rapid lesion expansion may occur during cool and humid conditions.",
+      "Severe infection can rapidly damage foliage."
+    ],
+    "general_management": [
+      "Remove severely affected plant material where practical.",
+      "Reduce prolonged leaf wetness.",
+      "Improve field monitoring during cool and humid weather.",
+      "Maintain good sanitation.",
+      "Seek local agricultural guidance for disease-management decisions."
+    ],
+    "advisory": "Late blight can progress rapidly; confirm suspected cases promptly."
+  },
+
+  "Potato___healthy": {
+    "crop": "Potato",
+    "disease": "Healthy",
+    "status": "healthy",
+    "severity": "none_detected",
+    "symptoms": [
+      "No strong visual evidence of the target potato diseases was detected."
+    ],
+    "general_management": [
+      "Continue routine crop monitoring.",
+      "Maintain good sanitation and plant nutrition.",
+      "Monitor newly developing leaves for visual changes."
+    ],
+    "advisory": "A healthy prediction does not guarantee absence of disease. Continue routine crop inspection."
+  },
+
+  "Tomato_Early_blight": {
+    "crop": "Tomato",
+    "disease": "Early Blight",
+    "status": "diseased",
+    "severity": "moderate_to_high",
+    "symptoms": [
+      "Dark lesions may develop on older tomato leaves.",
+      "Lesions may show concentric ring patterns.",
+      "Yellowing can occur around affected tissue.",
+      "Severe infection can lead to premature defoliation."
+    ],
+    "general_management": [
+      "Remove heavily affected foliage where practical.",
+      "Maintain good sanitation around plants.",
+      "Improve airflow through appropriate plant spacing and management.",
+      "Avoid prolonged leaf wetness.",
+      "Monitor surrounding plants for progression."
+    ],
+    "advisory": "Use the prediction as a screening aid and confirm uncertain cases with an agricultural expert."
+  },
+
+  "Tomato_Late_blight": {
+    "crop": "Tomato",
+    "disease": "Late Blight",
+    "status": "diseased",
+    "severity": "high",
+    "symptoms": [
+      "Dark irregular lesions may appear on leaves.",
+      "Affected tissue may have a water-soaked appearance.",
+      "Lesions can expand quickly under favorable environmental conditions.",
+      "Severe infection may rapidly damage foliage and fruit."
+    ],
+    "general_management": [
+      "Remove severely affected plant material where practical.",
+      "Reduce prolonged leaf wetness.",
+      "Improve airflow around plants.",
+      "Monitor plants frequently during favorable conditions.",
+      "Seek local agricultural guidance for management decisions."
+    ],
+    "advisory": "Late blight can progress rapidly; suspected cases should be evaluated promptly."
+  },
+
+  "Tomato_healthy": {
+    "crop": "Tomato",
+    "disease": "Healthy",
+    "status": "healthy",
+    "severity": "none_detected",
+    "symptoms": [
+      "No strong visual evidence of the target tomato diseases was detected."
+    ],
+    "general_management": [
+      "Continue routine crop monitoring.",
+      "Maintain good sanitation and plant care.",
+      "Monitor new growth for visual changes."
+    ],
+    "advisory": "A healthy prediction does not guarantee absence of disease. Continue routine crop inspection."
+  }
+}

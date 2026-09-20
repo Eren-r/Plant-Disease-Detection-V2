@@ -1,0 +1,8 @@
+[
+  {
+    "image_path": "data_split_grouped_6class\\test\\Tomato_Late_blight\\766771e1-8e8e-4ce4-9af6-b4ed91c9e80a___RS_Late.B 6881.JPG",
+    "actual_class": "Tomato_Late_blight",
+    "predicted_class": "Tomato_Early_blight",
+    "confidence": 0.9253130555152893
+  }
+]

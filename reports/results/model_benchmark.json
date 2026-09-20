@@ -1,0 +1,22 @@
+{
+  "device": "cuda",
+  "benchmark_images": 256,
+  "models": [
+    {
+      "model": "ResNet18 Robust",
+      "parameters": 11179590,
+      "latency_ms_per_image": 0.9869722656503654,
+      "throughput_images_per_sec": 1013.1996964889889,
+      "peak_gpu_memory_gb": 0.30336761474609375,
+      "checkpoint_size_mb": 42.72419261932373
+    },
+    {
+      "model": "EfficientNet-B0",
+      "parameters": 4015234,
+      "latency_ms_per_image": 1.370992578017649,
+      "throughput_images_per_sec": 729.3985511182883,
+      "peak_gpu_memory_gb": 0.3717794418334961,
+      "checkpoint_size_mb": 15.606328010559082
+    }
+  ]
+}

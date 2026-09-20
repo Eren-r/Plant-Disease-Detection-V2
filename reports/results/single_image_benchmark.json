@@ -1,0 +1,25 @@
+{
+  "benchmark_type": "single_image",
+  "warmup_runs": 20,
+  "timed_runs": 100,
+  "results": [
+    {
+      "model": "ResNet18 Robust",
+      "device": "cuda",
+      "batch_size": 1,
+      "mean_latency_ms": 7.330247997015249,
+      "p50_latency_ms": 7.316999981412664,
+      "p95_latency_ms": 7.588999986182898,
+      "p99_latency_ms": 7.72809999762103
+    },
+    {
+      "model": "EfficientNet-B0",
+      "device": "cuda",
+      "batch_size": 1,
+      "mean_latency_ms": 23.597687002911698,
+      "p50_latency_ms": 23.491600004490465,
+      "p95_latency_ms": 24.211600015405566,
+      "p99_latency_ms": 24.33240000391379
+    }
+  ]
+}

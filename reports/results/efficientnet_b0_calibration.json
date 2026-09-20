@@ -1,0 +1,27 @@
+{
+  "model": "EfficientNet-B0",
+  "dataset": "data_split_grouped_6class",
+  "checkpoint": "models\\checkpoints\\efficientnet_b0_best.pth",
+  "temperature": 0.984268069267273,
+  "before_calibration": {
+    "accuracy": 0.9969879388809204,
+    "nll": 0.021104246377944946,
+    "ece": 0.0037514104042202234,
+    "mean_confidence": 0.9943597912788391
+  },
+  "after_calibration": {
+    "accuracy": 0.9969879388809204,
+    "nll": 0.02109365724027157,
+    "ece": 0.0037111779674887657,
+    "mean_confidence": 0.9945813417434692
+  },
+  "class_names": [
+    "Potato___Early_blight",
+    "Potato___Late_blight",
+    "Potato___healthy",
+    "Tomato_Early_blight",
+    "Tomato_Late_blight",
+    "Tomato_healthy"
+  ],
+  "validation_samples": 996
+}
