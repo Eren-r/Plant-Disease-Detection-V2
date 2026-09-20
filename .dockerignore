@@ -1,0 +1,14 @@
+﻿.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.git/
+.github/
+dataset/
+data/
+data_split/
+data_split_6class/
+data_split_grouped_6class/
+requirements-full.txt
+.vscode/
+.idea/
