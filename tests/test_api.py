@@ -1,6 +1,8 @@
-from pathlib import Path
+from io import BytesIO
 
+import pytest
 from fastapi.testclient import TestClient
+from PIL import Image, ImageDraw
 
 from app.api import app
 
@@ -8,11 +10,21 @@ from app.api import app
 client = TestClient(app)
 
 
-TEST_IMAGE = Path(
-    "data_split_grouped_6class/test/"
-    "Tomato_Late_blight/"
-    "766771e1-8e8e-4ce4-9af6-b4ed91c9e80a___RS_Late.B 6881.JPG"
-)
+@pytest.fixture(scope="module")
+def test_image():
+    """Create a small synthetic leaf-like image for API contract tests."""
+    image = Image.new("RGB", (224, 224), "white")
+    draw = ImageDraw.Draw(image)
+
+    # Simple green leaf-like shape.
+    draw.ellipse((45, 30, 180, 195), fill=(70, 150, 70))
+    draw.line((112, 45, 112, 185), fill=(35, 100, 35), width=5)
+    draw.line((112, 110, 75, 80), fill=(35, 100, 35), width=3)
+    draw.line((112, 130, 150, 95), fill=(35, 100, 35), width=3)
+
+    buffer = BytesIO()
+    image.save(buffer, format="JPEG", quality=90)
+    return buffer.getvalue()
 
 
 def test_health():
@@ -49,26 +61,25 @@ def test_model_info():
     )
 
 
-def test_predict_valid_image():
-    assert TEST_IMAGE.exists()
+def test_predict_valid_image(test_image):
+    filename = "test_leaf.jpg"
 
-    with TEST_IMAGE.open("rb") as image_file:
-        response = client.post(
-            "/predict",
-            files={
-                "file": (
-                    TEST_IMAGE.name,
-                    image_file,
-                    "image/jpeg",
-                )
-            },
-        )
+    response = client.post(
+        "/predict",
+        files={
+            "file": (
+                filename,
+                test_image,
+                "image/jpeg",
+            )
+        },
+    )
 
     assert response.status_code == 200
 
     data = response.json()
 
-    assert data["filename"] == TEST_IMAGE.name
+    assert data["filename"] == filename
     assert "result" in data
 
     result = data["result"]
@@ -87,6 +98,7 @@ def test_predict_valid_image():
     }
 
     assert 0.0 <= prediction["confidence"] <= 1.0
+
     assert (
         0.0
         <= prediction["second_best_confidence"]
@@ -142,26 +154,22 @@ def test_predict_rejects_invalid_image():
 
     data = response.json()
 
-    assert (
-        "not a valid image"
-        in data["detail"]
+    assert "not a valid image" in data["detail"]
+
+
+def test_gradcam_valid_image(test_image):
+    filename = "test_leaf.jpg"
+
+    response = client.post(
+        "/explain",
+        files={
+            "file": (
+                filename,
+                test_image,
+                "image/jpeg",
+            )
+        },
     )
-
-
-def test_gradcam_valid_image():
-    assert TEST_IMAGE.exists()
-
-    with TEST_IMAGE.open("rb") as image_file:
-        response = client.post(
-            "/explain",
-            files={
-                "file": (
-                    TEST_IMAGE.name,
-                    image_file,
-                    "image/jpeg",
-                )
-            },
-        )
 
     assert response.status_code == 200
 
