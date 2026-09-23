@@ -84,6 +84,24 @@ def test_predict_valid_image(test_image):
 
     result = data["result"]
 
+    image_quality = result[
+        "image_quality"
+    ]
+
+    assert image_quality["status"] in {
+        "good",
+        "warning",
+        "poor",
+    }
+
+    assert 0.0 <= image_quality[
+        "score"
+    ] <= 100.0
+
+    assert image_quality["width"] > 0
+    assert image_quality["height"] > 0
+
+
     assert result["model"] == "EfficientNet-B0"
 
     prediction = result["prediction"]
@@ -117,6 +135,31 @@ def test_predict_valid_image(test_image):
     assert disease["symptoms"]
     assert disease["general_management"]
     assert disease["advisory"]
+
+    ood = result["ood"]
+
+    assert ood["status"] in {
+        "in_distribution",
+        "out_of_distribution",
+    }
+
+    assert isinstance(
+        ood["is_ood"],
+        bool,
+    )
+
+    assert -1.0 <= ood["similarity"] <= 1.0
+
+    assert 0.0 <= ood["threshold"] <= 1.0
+
+    assert ood["nearest_class"] in {
+        "Potato___Early_blight",
+        "Potato___Late_blight",
+        "Potato___healthy",
+        "Tomato_Early_blight",
+        "Tomato_Late_blight",
+        "Tomato_healthy",
+    }
 
 
 def test_predict_rejects_unsupported_type():

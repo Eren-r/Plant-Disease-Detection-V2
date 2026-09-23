@@ -1,0 +1,54 @@
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: plant-disease-detection-v2:local
+
+    environment:
+      PLANT_API_HOST: "0.0.0.0"
+      PLANT_API_PORT: "8000"
+
+    ports:
+      - "8000:8000"
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health').read()"
+        ]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: plant-disease-detection-v2:local
+
+    depends_on:
+      api:
+        condition: service_healthy
+
+    environment:
+      PLANT_API_URL: "http://api:8000"
+
+    command:
+      [
+        "streamlit",
+        "run",
+        "app/streamlit_app.py",
+        "--server.address=0.0.0.0",
+        "--server.port=8501"
+      ]
+
+    ports:
+      - "8501:8501"

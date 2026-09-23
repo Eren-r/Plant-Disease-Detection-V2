@@ -1,6 +1,12 @@
 import requests
 import streamlit as st
 
+from pathlib import Path
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.utils.config import (
     API_URL,
@@ -36,7 +42,7 @@ with st.sidebar:
     st.header("System Information")
 
     st.write(
-        "Model: **{MODEL_NAME}**"
+        f"Model: **{MODEL_NAME}**"
     )
 
     st.write(
@@ -175,6 +181,115 @@ if uploaded_file is not None:
         disease = result[
             "disease"
         ]
+
+        ood = result.get("ood")
+
+        if ood is not None:
+
+            st.subheader(
+                "🛡️ Input Novelty Check"
+            )
+
+            ood_col1, ood_col2 = st.columns(2)
+
+            with ood_col1:
+                if ood["is_ood"]:
+                    st.warning(
+                        "⚠️ Out-of-distribution"
+                    )
+                else:
+                    st.success(
+                        "✅ In-distribution"
+                    )
+
+            with ood_col2:
+                st.metric(
+                    "Similarity",
+                    f"{ood['similarity']:.4f}",
+                )
+
+            if ood["is_ood"]:
+                st.warning(
+                    "This image appears different from "
+                    "the supported image distribution. "
+                    "Treat the prediction with caution."
+                )
+            else:
+                st.success(
+                    "The image is consistent with the "
+                    "supported image distribution."
+                )
+
+            st.caption(
+                f"Detection threshold: "
+                f"{ood['threshold']:.4f}"
+            )
+
+            nearest_class = (
+                ood["nearest_class"]
+                .replace("___", " - ")
+                .replace("_", " ")
+            )
+
+            st.caption(
+                f"Nearest known class: {nearest_class}"
+            )
+
+        st.divider()
+
+        st.subheader(
+            "Prediction"
+        )
+
+        quality = result.get(
+            "image_quality"
+        )
+
+        if quality is not None:
+
+            st.subheader(
+                "Image Quality"
+            )
+
+            quality_col1, quality_col2 = (
+                st.columns(2)
+            )
+
+            with quality_col1:
+                st.metric(
+                    "Quality Score",
+                    f"{quality['score']:.0f}/100",
+                )
+
+            with quality_col2:
+                st.metric(
+                    "Status",
+                    quality["status"].title(),
+                )
+
+            if quality["status"] == "good":
+                st.success(
+                    "Image quality is suitable for analysis."
+                )
+
+            elif quality["status"] == "warning":
+                st.warning(
+                    "Image quality has some limitations. "
+                    "Consider uploading a clearer image."
+                )
+
+            else:
+                st.error(
+                    "Image quality is poor. "
+                    "A clearer image is recommended."
+                )
+
+            for warning in quality["warnings"]:
+                st.caption(
+                    f"⚠️ {warning}"
+                )
+
+            st.divider()
 
         st.divider()
 

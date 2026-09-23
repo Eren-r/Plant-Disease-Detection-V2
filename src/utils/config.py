@@ -107,6 +107,13 @@ KNOWLEDGE_BASE_FILE = Path(
     )
 )
 
+OOD_ARTIFACT = (
+    PROJECT_ROOT
+    / "reports"
+    / "results"
+    / "efficientnet_b0_ood.json"
+)
+
 
 # ------------------------------------------------------------------
 # Inference

@@ -24,7 +24,14 @@ from src.utils.config import (
     APP_VERSION,
     MAX_FILE_SIZE,
     MODEL_NAME,
+    OOD_ARTIFACT,
 )
+
+from src.inference.image_quality import (
+    ImageQualityAnalyzer,
+)
+
+from src.inference.ood_guard import OODGuard
 
 
 app = FastAPI(
@@ -40,6 +47,12 @@ app = FastAPI(
 service = DiseasePredictionService()
 
 gradcam_service = EfficientNetGradCAM()
+
+ood_guard = OODGuard(
+    OOD_ARTIFACT
+)
+quality_analyzer = ImageQualityAnalyzer()
+
 
 
 def load_uploaded_image(
@@ -128,6 +141,18 @@ def model_info():
             service.knowledge_base.classes()
         ),
         "explainability": "Grad-CAM",
+        "ood_protection": {
+            "enabled": True,
+            "method": (
+                "EfficientNet-B0 nearest-class "
+                "centroid cosine similarity"
+            ),
+            "threshold": ood_guard.threshold,
+        },
+        "image_quality": {
+            "enabled": True,
+            "mode": "advisory",
+        },
         "service_role": "screening_decision_support",
     }
 
@@ -140,12 +165,26 @@ async def predict(
         file
     )
 
+    quality = quality_analyzer.analyze(
+        image
+    )
+
+    ood_result = ood_guard.analyze(
+        image
+    )
+
     try:
 
         result = service.predict(
             image,
             top_k=3,
         )
+
+        result["image_quality"] = (
+            quality.to_dict()
+        )
+
+        result["ood"] = ood_result
 
     except Exception as exc:
 
