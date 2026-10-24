@@ -592,7 +592,3 @@ The current version includes:
 Public cloud deployment and external field validation remain future deployment/validation steps.
 
 ---
-
-## License
-
-Add the project's chosen open-source license before public distribution.
