@@ -36,7 +36,7 @@ git status
 git switch -c feature/v3-grapes
 ```
 
-If `main` has diverged from `origin/main`, reconcile it safely first instead of merging blindly or force-pushing. Copy `v3/`, `knowledge_base/grapes.json`, and `tests/test_grape_prepare.py` into the repository. The original files remain untouched.
+If `main` has diverged from `origin/main`, reconcile it safely first instead of merging blindly or force-pushing. The new modules are committed on the feature branch. Existing V2 modules remain untouched.
 
 ### 2. Download the dataset to the external SSD
 
@@ -57,7 +57,7 @@ Review `audit.json`, `rejected.csv`, and `label_conflicts.csv`. If the script re
 ### 4. Run preparer tests
 
 ```powershell
-python -m pytest tests/test_grape_prepare.py -q
+python -m pytest tests/test_grapes_v3.py -q
 ```
 
 ### 5. Optional quick training smoke test
@@ -101,7 +101,7 @@ Replace the example image with a **real file path** from the manifest. The predi
 ### 8. Commit code and metadata to GitHub
 
 ```powershell
-git add v3/ knowledge_base/grapes.json tests/test_grape_prepare.py README_GRAPES_V3.md
+git add v3/ knowledge_base/grapes.json tests/test_grapes_v3.py README_GRAPES_V3.md
 git commit -m "Add grape dataset audit and separate EfficientNet-B0 training pipeline"
 git push -u origin feature/v3-grapes
 ```
