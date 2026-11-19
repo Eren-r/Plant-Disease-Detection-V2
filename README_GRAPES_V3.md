@@ -29,14 +29,16 @@ E:/AgriVision_AI/
 
 Use the existing project root, in an activated Python 3.11 environment with `torch`, `torchvision`, `numpy`, `scikit-learn`, `Pillow`, `pytest` installed. Your existing V2 environment contains these. For an RTX 3050 4 GB GPU, begin with `--batch-size 8` or `16`, and `--workers 0` on Windows.
 
-From the repository root, create a **new feature branch** before adding these files:
+The feature branch is already published on GitHub. On a **fresh clone**, check it out:
 
 ```powershell
-git status
-git switch -c feature/v3-grapes
+git clone https://github.com/Eren-r/Plant-Disease-Detection-V2.git
+cd Plant-Disease-Detection-V2
+git fetch origin
+git switch --track origin/feature/v3-grapes
 ```
 
-If `main` has diverged from `origin/main`, reconcile it safely first instead of merging blindly or force-pushing. The new modules are committed on the feature branch. Existing V2 modules remain untouched.
+If you already have a local copy with unpushed changes, **do not reset it**. First run `git status`, `git branch -vv` and `git fetch origin` and reconcile changes safely. The new modules are committed on the feature branch. Existing V2 modules remain untouched.
 
 ### 2. Download the dataset to the external SSD
 
@@ -103,7 +105,7 @@ Replace the example image with a **real file path** from the manifest. The predi
 ```powershell
 git add v3/ knowledge_base/grapes.json tests/test_grapes_v3.py README_GRAPES_V3.md
 git commit -m "Add grape dataset audit and separate EfficientNet-B0 training pipeline"
-git push -u origin feature/v3-grapes
+git push origin feature/v3-grapes
 ```
 
-Then open a pull request, review tests and data provenance, and merge only when ready. **Do not commit raw images, private farm metadata or large model checkpoints to normal Git history.** Add `datasets/`, `*.pth`, and raw image folders to `.gitignore` where appropriate; don't accidentally exclude `knowledge_base/grapes.json`. Use DVC, artifact storage, or a GitHub Release for an approved model if distribution is required. Keep the existing Potato/Tomato disease database intact, and merge the expert-reviewed grape knowledge base via a crop-aware service in a later integration phase.
+Draft pull request #1 already exists. Review tests and data provenance, and merge only when ready. **Do not commit raw images, private farm metadata or large model checkpoints to normal Git history.** Add `datasets/`, `*.pth`, and raw image folders to `.gitignore` where appropriate; don't accidentally exclude `knowledge_base/grapes.json`. Use DVC, artifact storage, or a GitHub Release for an approved model if distribution is required. Keep the existing Potato/Tomato disease database intact, and merge the expert-reviewed grape knowledge base via a crop-aware service in a later integration phase.
