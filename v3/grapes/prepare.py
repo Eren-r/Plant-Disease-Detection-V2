@@ -187,10 +187,14 @@ def prepare(raw_root, out_dir, radius=3, groups_csv=None):
                 dsu.union(i, sources[group])
             sources.setdefault(group, i)
     conflicts = []
-    for i, record in enumerate(records):
-        for j in range(i):
-            if record["sha256"] == records[j]["sha256"] and record["label"] != records[j]["label"]:
-                conflicts.append({"image_a": records[j]["relative_path"], "image_b": record["relative_path"]})
+    # Scan SHA groups once instead of comparing every possible image pair.
+    hashes = defaultdict(list)
+    for record in records:
+        hashes[record["sha256"]].append(record)
+    for identical in hashes.values():
+        if len({record["label"] for record in identical}) > 1:
+            conflicts.append({"image_a": identical[0]["relative_path"],
+                              "image_b": identical[-1]["relative_path"]})
     conflicts.extend({"image_a": a, "image_b": b} for a, b in near_pairs)
     write_csv(out_dir / "label_conflicts.csv", conflicts, ["image_a", "image_b"])
     if conflicts:
