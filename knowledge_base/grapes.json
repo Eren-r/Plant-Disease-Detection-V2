@@ -1,0 +1,42 @@
+{
+  "Grapes_Black_rot": {
+    "crop": "Grapes",
+    "disease": "Black rot",
+    "status": "diseased",
+    "severity": "requires_field_assessment",
+    "symptoms": ["Visible leaf lesions or spotting may occur; appearance varies by stage."],
+    "general_management": ["Consult a qualified viticulture expert to confirm the diagnosis and inspect the vineyard."],
+    "advisory": "Draft entry: expert review is required before treatment guidance is released.",
+    "review_status": "pending_agronomist_review"
+  },
+  "Grapes_Esca": {
+    "crop": "Grapes",
+    "disease": "Esca",
+    "status": "diseased",
+    "severity": "requires_field_assessment",
+    "symptoms": ["Some affected vines develop characteristic interveinal discoloration; symptoms can vary."],
+    "general_management": ["Have a viticulture expert inspect the vine and consider disease history."],
+    "advisory": "An image prediction cannot independently establish trunk disease.",
+    "review_status": "pending_agronomist_review"
+  },
+  "Grapes_healthy": {
+    "crop": "Grapes",
+    "disease": "Healthy / no target disease detected",
+    "status": "healthy_prediction",
+    "severity": "not_assessed",
+    "symptoms": ["No target-class disease pattern identified by the model in the submitted image."],
+    "general_management": ["Continue regular plant monitoring."],
+    "advisory": "A healthy prediction cannot rule out pests, deficiencies or other diseases.",
+    "review_status": "pending_agronomist_review"
+  },
+  "Grapes_Leaf_blight": {
+    "crop": "Grapes",
+    "disease": "Leaf blight (dataset class)",
+    "status": "diseased",
+    "severity": "requires_field_assessment",
+    "symptoms": ["Brown or necrotic leaf lesions may occur; several conditions can look similar."],
+    "general_management": ["Confirm the cause with a viticulture specialist before selecting management actions."],
+    "advisory": "Draft entry; dataset label and biological diagnosis require expert review.",
+    "review_status": "pending_agronomist_review"
+  }
+}
