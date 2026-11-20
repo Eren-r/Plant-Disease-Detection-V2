@@ -6,7 +6,7 @@ matplotlib.use("Agg")
 
 from matplotlib import colormaps
 import numpy as np
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import Response
 from PIL import Image, UnidentifiedImageError
 
@@ -32,6 +32,8 @@ from src.inference.image_quality import (
 )
 
 from src.inference.ood_guard import OODGuard
+
+from v3.grapes.service import get_grape_service, grape_checkpoint_path
 
 
 app = FastAPI(
@@ -198,6 +200,74 @@ async def predict(
 
     return {
         "filename": file.filename,
+        "result": result,
+    }
+
+
+@app.get("/supported-crops")
+def supported_crops():
+    """List explicit crop choices without loading the Grapes model."""
+    return {
+        "crops": ["Potato", "Tomato", "Grapes"],
+        "grapes_checkpoint_available": grape_checkpoint_path().is_file(),
+        "grapes_experimental": True,
+    }
+
+
+@app.post("/predict-crop")
+async def predict_crop(
+    file: UploadFile = File(...),
+    crop: str = Form(...),
+):
+    """Explicit crop routing while retaining the original V2 /predict contract."""
+    if crop not in {"Potato", "Tomato", "Grapes"}:
+        raise HTTPException(
+            status_code=422,
+            detail="Unsupported crop. Choose Potato, Tomato, or Grapes.",
+        )
+
+    image = await read_image_upload(file)
+    quality = quality_analyzer.analyze(image)
+
+    if crop == "Grapes":
+        try:
+            result = get_grape_service().predict(image, top_k=4)
+        except FileNotFoundError as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        except (KeyError, ValueError, RuntimeError) as exc:
+            raise HTTPException(
+                status_code=503,
+                detail=f"Grapes model could not be loaded or used: {type(exc).__name__}",
+            ) from exc
+        result["image_quality"] = quality.to_dict()
+    else:
+        # Original calibrated six-class Potato/Tomato prediction, including V2 OOD.
+        try:
+            result = service.predict(image, top_k=3)
+            result["image_quality"] = quality.to_dict()
+            result["ood"] = ood_guard.analyze(image)
+        except Exception as exc:
+            raise HTTPException(
+                status_code=500,
+                detail=f"V2 prediction failed: {type(exc).__name__}",
+            ) from exc
+
+        # Do not silently reinterpret another crop's predicted disease as the
+        # crop selected in the dashboard. This is not a crop-validation guarantee.
+        inferred_crop = result["disease"]["crop"]
+        if inferred_crop != crop:
+            raise HTTPException(
+                status_code=422,
+                detail=(
+                    f"You selected {crop}, but the existing V2 classifier predicted "
+                    f"{inferred_crop}. Check the uploaded leaf and selected crop. "
+                    "No crop-specific diagnosis was returned."
+                ),
+            )
+
+    return {
+        "filename": file.filename,
+        "selected_crop": crop,
         "result": result,
     }
 

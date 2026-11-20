@@ -80,3 +80,9 @@ requirements-full.txt
 
 *.bak
 *.swp
+
+# V3 crop data/models stay on external SSD
+v3/datasets/
+v3/artifacts/
+models/grapes/
+*.pth

@@ -1,54 +1,57 @@
+# Run locally from the repository root:
+# docker compose up --build -d
+# Docker Desktop on Windows: Linux containers + WSL2.
+# This default CPU image runs without NVIDIA container support.
 services:
-
   api:
     build:
       context: .
       dockerfile: Dockerfile
-
-    image: plant-disease-detection-v2:local
-
+      args:
+        TORCH_REQUIREMENTS: requirements-ci.txt
+    image: plant-disease-detection-v3:cpu
+    restart: unless-stopped
+    init: true
     environment:
       PLANT_API_HOST: "0.0.0.0"
       PLANT_API_PORT: "8000"
-
+      PLANT_APP_VERSION: "3.0.0"
+      GRAPES_MODEL_PATH: "/app/models/grapes/efficientnet_b0_grapes_best.pth"
+    volumes:
+      # Your local (ignored by Git) trained Grapes checkpoint.
+      # The mount is read-only and is NOT included in the Docker image.
+      - type: bind
+        source: ./models/grapes
+        target: /app/models/grapes
+        read_only: true
     ports:
-      - "8000:8000"
-
+      - "127.0.0.1:${PLANT_HOST_API_PORT:-8000}:8000"
     healthcheck:
-      test:
-        [
-          "CMD",
-          "python",
-          "-c",
-          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health').read()"
-        ]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5).read()"]
       interval: 30s
       timeout: 10s
-      start_period: 60s
+      start_period: 90s
       retries: 3
 
   streamlit:
-    build:
-      context: .
-      dockerfile: Dockerfile
-
-    image: plant-disease-detection-v2:local
-
+    image: plant-disease-detection-v3:cpu
+    restart: unless-stopped
+    init: true
     depends_on:
       api:
         condition: service_healthy
-
     environment:
       PLANT_API_URL: "http://api:8000"
-
+      PLANT_APP_VERSION: "3.0.0"
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
     command:
-      [
-        "streamlit",
-        "run",
-        "app/streamlit_app.py",
-        "--server.address=0.0.0.0",
-        "--server.port=8501"
-      ]
-
+      - python
+      - -m
+      - streamlit
+      - run
+      - app/streamlit_app.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+      - --server.headless=true
     ports:
-      - "8501:8501"
+      - "127.0.0.1:${PLANT_HOST_UI_PORT:-8501}:8501"

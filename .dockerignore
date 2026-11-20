@@ -1,14 +1,45 @@
-﻿.venv/
-__pycache__/
-*.py[cod]
-.pytest_cache/
+# Do not ship local data, models, private metadata, or development artifacts
 .git/
 .github/
+.venv/
+venv/
+env/
+.vscode/
+.idea/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.streamlit/
+.env
+.env.*
+!.env.example
+*.log
+*.tmp
+*.bak
+*.zip
+*.csv
+
+# Datasets and derived training artifacts are NOT used for inference.
 dataset/
 data/
 data_split/
 data_split_6class/
 data_split_grouped_6class/
+v3/datasets/
+v3/artifacts/
+reports/grapes/
+reports/figures/
+
+# Never accidentally copy locally trained Grapes weights into the build context.
+models/grapes/
+*.pth
+# This V2 production model is intentionally copied from the versioned repo.
+!models/checkpoints/efficientnet_b0_best.pth
+
+# Unneeded for runtime: tests, docs, editor artifacts.
+tests/
 requirements-full.txt
-.vscode/
-.idea/
+README*
