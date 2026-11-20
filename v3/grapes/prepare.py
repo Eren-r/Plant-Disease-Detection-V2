@@ -149,7 +149,8 @@ def best_group_split(labels, groups, fraction, seed):
 
 
 def prepare(raw_root, out_dir, radius=3, groups_csv=None,
-            quarantine_exact_conflicts=False, phash_distance=5, rgb_mae_max=0.06):
+            quarantine_exact_conflicts=False, phash_distance=5, rgb_mae_max=0.06,
+            quarantine_near_conflicts=False):
     """Build a training manifest after explicitly handling cross-label exact duplicates.
 
     Never edits/deletes raw photos. Weak dHash candidates are REVIEW FLAGS,
@@ -238,7 +239,7 @@ def prepare(raw_root, out_dir, radius=3, groups_csv=None,
             seen_source.setdefault(source, i)
 
     dindex, pindex = BKTree(), BKTree()
-    weak_candidates, strong_conflicts = [], []
+    weak_candidates, strong_conflicts, affected_near = [], [], set()
     for i, row in enumerate(kept):
         dh, ph = int(row["dhash"], 16), int(row["phash"], 16)
         dh_hits = set(dindex.query(dh, radius))
@@ -254,6 +255,7 @@ def prepare(raw_root, out_dir, radius=3, groups_csv=None,
                 if row["label"] == previous["label"]:
                     dsu.union(i, j)
                 else:
+                    affected_near.update((i, j))
                     strong_conflicts.append({
                         "image_a": previous["relative_path"], "image_b": row["relative_path"],
                         "label_a": previous["label"], "label_b": row["label"],
@@ -272,12 +274,33 @@ def prepare(raw_root, out_dir, radius=3, groups_csv=None,
                "dhash_distance", "phash_distance", "rgb_mae"])
     write_csv(out_dir / "weak_dhash_candidates.csv", weak_candidates,
               ["image_a", "image_b", "dhash_distance", "phash_distance", "rgb_mae"])
-    if strong_conflicts:
+    if strong_conflicts and not quarantine_near_conflicts:
         raise ValueError(f"{len(strong_conflicts)} high-similarity cross-label pairs need review; "
-                         "inspect near_label_conflicts.csv")
+                         "inspect near_label_conflicts.csv. To create an explicitly PROVISIONAL "
+                         "manifest without those candidates, use --quarantine-near-conflicts.")
 
-    groups = [f"g{dsu.find(i):06d}" for i in range(len(kept))]
-    labels = [row["label"] for row in kept]
+    # Conservative, opt-in *manifest* exclusion: remove both sides of every
+    # cross-label near-match and their within-label duplicate/source groups.
+    # No source image is moved, renamed or deleted.
+    affected_roots = ({dsu.find(i) for i in affected_near}
+                      if quarantine_near_conflicts else set())
+    near_quarantined = [
+        {"relative_path": row["relative_path"], "label": row["label"],
+         "reason": "unreviewed_cross_label_near_candidate_group"}
+        for i, row in enumerate(kept) if dsu.find(i) in affected_roots
+    ]
+    quarantined.extend(near_quarantined)
+    write_csv(out_dir / "quarantined.csv", quarantined,
+              ["relative_path", "label", "reason"])
+    selected_indices = [i for i in range(len(kept)) if dsu.find(i) not in affected_roots]
+    selected = [kept[i] for i in selected_indices]
+    counts = Counter(row["label"] for row in selected)
+    if any(counts[cls] == 0 for cls in CLASSES):
+        raise ValueError("Provisional quarantine removes an entire class; "
+                         "manual data review is needed before splitting.")
+
+    groups = [f"g{dsu.find(i):06d}" for i in selected_indices]
+    labels = [row["label"] for row in selected]
     remaining, test = best_group_split(labels, groups, 0.15, 42)
     train_local, val_local = best_group_split(
         [labels[i] for i in remaining], [groups[i] for i in remaining],
@@ -285,23 +308,26 @@ def prepare(raw_root, out_dir, radius=3, groups_csv=None,
     assignment = {int(i): "test" for i in test}
     assignment.update({int(remaining[i]): "train" for i in train_local})
     assignment.update({int(remaining[i]): "val" for i in val_local})
-    for i, row in enumerate(kept):
+    for i, row in enumerate(selected):
         row.update({"group_id": groups[i], "split": assignment[i]})
     split_groups = defaultdict(set)
-    for row in kept:
+    for row in selected:
         split_groups[row["group_id"]].add(row["split"])
     assert all(len(splits) == 1 for splits in split_groups.values())
-    write_csv(out_dir / "manifest.csv", kept,
+    write_csv(out_dir / "manifest.csv", selected,
               ["relative_path", "label", "split", "group_id", "sha256", "dhash",
                "phash", "width", "height", "source_group"])
     audit = {
         "source": "GVLiD Mendeley Data v5", "doi": "10.17632/wkymf8bhcg.5",
         "license": "CC BY 4.0; attribution required",
-        "total_valid_source_images": len(records), "images": len(kept),
+        "total_valid_source_images": len(records), "images": len(selected),
         "original_class_counts": dict(original_counts), "class_counts": dict(counts),
         "splits": dict(Counter(r["split"] for r in kept)),
         "groups": len(split_groups),
-        "quarantined_cross_label_sha_files": len(quarantined),
+        "quarantined_cross_label_sha_files": len(quarantined) - len(near_quarantined),
+        "quarantined_near_candidate_files": len(near_quarantined),
+        "provisional_near_candidate_quarantine_used": bool(affected_roots),
+        "manifest_status": "provisional_requires_review",
         "cross_label_sha_groups": len(cross_sha),
         "strong_cross_label_pairs": len(strong_conflicts),
         "weak_dhash_candidates_for_review": len(weak_candidates),
@@ -321,6 +347,7 @@ def main():
     parser.add_argument("--groups-csv", type=Path)
     parser.add_argument("--near-distance", type=int, default=3)
     parser.add_argument("--quarantine-exact-conflicts", action="store_true")
+    parser.add_argument("--quarantine-near-conflicts", action="store_true")
     parser.add_argument("--near-phash-distance", type=int, default=5)
     parser.add_argument("--near-rgb-mae", type=float, default=0.06)
     args = parser.parse_args()
@@ -330,7 +357,7 @@ def main():
         parser.error("Invalid near similarity thresholds")
     prepare(args.raw_root, args.out_dir, args.near_distance, args.groups_csv,
             args.quarantine_exact_conflicts, args.near_phash_distance,
-            args.near_rgb_mae)
+            args.near_rgb_mae, args.quarantine_near_conflicts)
 
 
 if __name__ == "__main__":
