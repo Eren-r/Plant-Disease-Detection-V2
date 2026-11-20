@@ -119,3 +119,51 @@ git push origin feature/v3-grapes
 ```
 
 Draft pull request #1 already exists. Review tests and data provenance, and merge only when ready. **Do not commit raw images, private farm metadata or large model checkpoints to normal Git history.** Add `datasets/`, `*.pth`, and raw image folders to `.gitignore` where appropriate; don't accidentally exclude `knowledge_base/grapes.json`. Use DVC, artifact storage, or a GitHub Release for an approved model if distribution is required. Keep the existing Potato/Tomato disease database intact, and merge the expert-reviewed grape knowledge base via a crop-aware service in a later integration phase.
+
+## Dataset conflict handling — November 2026 revision
+
+The first audit of the local GVLiD extraction flagged 399 cross-label candidate pairs with
+`--near-distance 3`. A repeat audit with `--near-distance 0` flagged 309 pairs.
+Among the 399 candidates, a separate SHA-256 investigation found 18 duplicate pair
+**entries** (not necessarily 18 distinct SHA groups), predominantly Black Rot versus Esca,
+and 364 candidate pairs between Esca and Leaf Blight.
+
+The original dHash-only check generated many weak candidates; even distance 0
+does not prove two photographs are identical. The revised pipeline distinguishes:
+
+- `exact_label_conflicts.csv`: every file belonging to a byte-identical
+  SHA-256 group whose files carry conflicting class labels. These are blocking
+  issues by default.
+- `quarantined.csv`: only exact cross-label SHA groups, explicitly excluded
+  from the manifest with `--quarantine-exact-conflicts`. The raw files are
+  not deleted or renamed. Review this list with dataset provenance before
+  approving any training run.
+- `weak_dhash_candidates.csv`: suspect cross-label pairs flagged by dHash
+  but not supported by the independent pHash + RGB test. Keep under review;
+  a collision alone is not ground truth.
+- `near_label_conflicts.csv`: cross-label pairs supported by pHash distance
+  and low normalized 32×32 RGB difference. These **still require human review**,
+  and block the manifest.
+- `manifest.csv`: produced only when no strong unresolved conflicts remain
+  and exact cross-label issues have been reviewed/quarantined.
+
+Run from the project root (the data stays under the existing local project):
+
+```powershell
+python -m pytest tests/test_grapes_v3.py -q
+
+python -m v3.grapes.prepare `
+  --raw-root "data\grapes\raw" `
+  --out-dir "data\grapes\manifests\gvlid_v2" `
+  --quarantine-exact-conflicts
+```
+
+Review `audit.json`, `quarantined.csv`, `near_label_conflicts.csv`
+and `weak_dhash_candidates.csv`. If it still stops, **do not train**
+or bypass the new checks: review the listed candidates, confirm provenance,
+and agree on an explicit source-preserving resolution first. For training,
+change `--manifest` to the new `gvlid_v2\manifest.csv` path.
+
+This is an internal duplicate-aware split, **not** proof of field-independent
+validation. Verified farm/vine/session grouping and independent field testing
+remain necessary before company deployment.
