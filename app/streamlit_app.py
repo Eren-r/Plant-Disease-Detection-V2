@@ -1,3 +1,5 @@
+import hashlib
+
 import requests
 import streamlit as st
 
@@ -61,6 +63,19 @@ with st.sidebar:
     )
 
 
+selected_crop = st.selectbox(
+    "Select the crop to analyze",
+    options=("Potato", "Tomato", "Grapes"),
+    index=0,
+    help="Potato/Tomato use your calibrated V2 model; Grapes uses the separate V3 experimental model.",
+)
+if selected_crop == "Grapes":
+    st.warning(
+        "Grapes is an experimental four-class model trained on a provisional dataset. "
+        "Select it only for confirmed grape leaves. Scores are not calibrated; "
+        "Grapes Grad-CAM and out-of-distribution detection are not available yet."
+    )
+
 uploaded_file = st.file_uploader(
     "Upload a plant leaf image",
     type=[
@@ -72,6 +87,17 @@ uploaded_file = st.file_uploader(
     ],
 )
 
+
+# Never display a prior crop/file result after the user switches selection.
+_selection_key = (
+    selected_crop,
+    uploaded_file.name if uploaded_file is not None else None,
+    hashlib.sha256(uploaded_file.getvalue()).hexdigest() if uploaded_file is not None else None,
+)
+if st.session_state.get("_selection_key") != _selection_key:
+    st.session_state["_selection_key"] = _selection_key
+    st.session_state.analysis_result = None
+    st.session_state.gradcam_image = None
 
 if uploaded_file is not None:
 
@@ -119,9 +145,10 @@ if uploaded_file is not None:
                     }
 
                     response = requests.post(
-                        f"{API_URL}/predict",
+                        f"{API_URL}/predict-crop",
                         files=files,
-                        timeout=60,
+                        data={"crop": selected_crop},
+                        timeout=120,
                     )
 
                 except requests.RequestException as exc:
@@ -318,7 +345,7 @@ if uploaded_file is not None:
         with metric3:
 
             st.metric(
-                "Confidence",
+                "Model score (uncalibrated)" if result.get("experimental") else "Confidence",
                 f"{prediction['confidence']:.2%}",
             )
 
@@ -376,91 +403,99 @@ if uploaded_file is not None:
 
         st.divider()
 
-        st.subheader(
-            "🔬 Model Explanation"
-        )
+        if selected_crop == "Grapes":
+            st.subheader("Model Explanation")
+            st.info(
+                "Grapes Grad-CAM is not available yet. The V2 explanation "
+                "endpoint uses the Potato/Tomato model and cannot be used for Grapes."
+            )
+            st.divider()
+        else:
+            st.subheader(
+                "🔬 Model Explanation"
+            )
 
-        st.write(
-            "Grad-CAM highlights image regions "
-            "that contributed to the model's prediction."
-        )
+            st.write(
+                "Grad-CAM highlights image regions "
+                "that contributed to the model's prediction."
+            )
 
-        explain = st.button(
-            "🧠 Generate Grad-CAM",
-            use_container_width=True,
-        )
-
-        if explain:
-
-            with st.spinner(
-                "Generating explanation..."
-            ):
-
-                try:
-
-                    files = {
-                        "file": (
-                            uploaded_file.name,
-                            uploaded_file.getvalue(),
-                            uploaded_file.type,
-                        )
-                    }
-
-                    response = requests.post(
-                        f"{API_URL}/explain",
-                        files=files,
-                        timeout=60,
-                    )
-
-                    if response.status_code != 200:
-
-                        st.error(
-                            f"Grad-CAM generation failed "
-                            f"(HTTP {response.status_code})."
-                        )
-
-                        try:
-                            st.json(
-                                response.json()
-                            )
-                        except Exception:
-                            st.code(
-                                response.text
-                            )
-
-                    else:
-
-                        st.session_state.gradcam_image = (
-                            response.content
-                        )
-
-                except requests.RequestException as exc:
-
-                    st.error(
-                        "Could not connect to "
-                        "the FastAPI backend."
-                    )
-
-                    st.code(
-                        str(exc)
-                    )
-
-
-        if (
-            st.session_state.gradcam_image
-            is not None
-        ):
-
-            st.image(
-                st.session_state.gradcam_image,
-                caption=(
-                    "Grad-CAM attention map"
-                ),
+            explain = st.button(
+                "🧠 Generate Grad-CAM",
                 use_container_width=True,
             )
 
+            if explain:
 
-        st.divider()
+                with st.spinner(
+                    "Generating explanation..."
+                ):
+
+                    try:
+
+                        files = {
+                            "file": (
+                                uploaded_file.name,
+                                uploaded_file.getvalue(),
+                                uploaded_file.type,
+                            )
+                        }
+
+                        response = requests.post(
+                            f"{API_URL}/explain",
+                            files=files,
+                            timeout=60,
+                        )
+
+                        if response.status_code != 200:
+
+                            st.error(
+                                f"Grad-CAM generation failed "
+                                f"(HTTP {response.status_code})."
+                            )
+
+                            try:
+                                st.json(
+                                    response.json()
+                                )
+                            except Exception:
+                                st.code(
+                                    response.text
+                                )
+
+                        else:
+
+                            st.session_state.gradcam_image = (
+                                response.content
+                            )
+
+                    except requests.RequestException as exc:
+
+                        st.error(
+                            "Could not connect to "
+                            "the FastAPI backend."
+                        )
+
+                        st.code(
+                            str(exc)
+                        )
+
+
+            if (
+                st.session_state.gradcam_image
+                is not None
+            ):
+
+                st.image(
+                    st.session_state.gradcam_image,
+                    caption=(
+                        "Grad-CAM attention map"
+                    ),
+                    use_container_width=True,
+                )
+
+
+            st.divider()
 
         st.subheader(
             "Disease Information"
@@ -511,11 +546,20 @@ if uploaded_file is not None:
         )
 
 
-        st.caption(
-            f"Model: {result['model']} | "
-            f"Calibration temperature: "
-            f"{result['temperature']:.4f}"
-        )
+        if result.get("experimental"):
+            st.warning(
+                "Experimental Grapes result. Model scores are uncalibrated, "
+                "and field-level validation, unknown-input handling, "
+                "and agricultural expert review are still pending."
+            )
+            if disease.get("review_status"):
+                st.caption(f"Disease information review: {disease['review_status']}")
+            st.caption(f"Model: {result['model']} | Calibration: none")
+        else:
+            st.caption(
+                f"Model: {result['model']} | "
+                f"Calibration temperature: {result['temperature']:.4f}"
+            )
 
 else:
 
