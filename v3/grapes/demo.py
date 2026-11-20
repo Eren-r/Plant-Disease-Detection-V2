@@ -32,10 +32,12 @@ st.warning(
     "Do not make treatment decisions from this demonstration."
 )
 
+DEFAULT_CHECKPOINT = PROJECT_ROOT / "models" / "grapes" / "efficientnet_b0_grapes_best.pth"
 checkpoint_text = st.text_input(
     "Full path to the trained grape model checkpoint (.pth)",
-    value=os.environ.get("GRAPES_MODEL_PATH", ""),
-    placeholder=r"E:\AgriVision_AI\models\grapes\efficientnet_b0_grapes_best.pth",
+    value=os.environ.get("GRAPES_MODEL_PATH", str(DEFAULT_CHECKPOINT)),
+    help="Defaults to models/grapes/efficientnet_b0_grapes_best.pth inside this project. "
+         "You can override it with GRAPES_MODEL_PATH.",
 )
 uploaded = st.file_uploader("Upload a grape leaf image", type=["jpg", "jpeg", "png", "webp", "bmp"])
 
@@ -45,7 +47,7 @@ if uploaded is not None:
 if st.button("Analyze grape leaf", type="primary", disabled=(uploaded is None)):
     checkpoint = Path(checkpoint_text.strip().strip('"'))
     if not checkpoint.is_file():
-        st.error("Grape checkpoint not found. Complete training and enter the full .pth path.")
+        st.error(f"Grape checkpoint not found at: {checkpoint}. Confirm the file exists.")
         st.stop()
 
     image_bytes = uploaded.getvalue()
