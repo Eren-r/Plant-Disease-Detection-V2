@@ -52,7 +52,7 @@ with st.sidebar:
     )
 
     st.write(
-        "Inference: **GPU accelerated**"
+        "Inference: **CPU or CUDA, depending on backend environment**"
     )
 
     st.divider()
