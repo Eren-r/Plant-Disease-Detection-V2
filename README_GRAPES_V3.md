@@ -100,7 +100,17 @@ python -m v3.grapes.predict `
 
 Replace the example image with a **real file path** from the manifest. The prediction CLI assumes a grape leaf is already confirmed; calibration, OOD gating and integration into the main FastAPI service are later tasks.
 
-### 8. Commit code and metadata to GitHub
+### 8. Launch standalone Grapes browser demo (after training)
+
+This experimental Streamlit page **does not modify** the existing V2 FastAPI or Streamlit endpoints.
+
+```powershell
+python -m streamlit run v3/grapes/demo.py --server.port 8502
+```
+
+Open `http://localhost:8502`, paste the full trained grape checkpoint path such as `E:\\AgriVision_AI\\models\\grapes\\efficientnet_b0_grapes_best.pth`, and upload a **known grape leaf**. The output is a four-class experimental inference, not a crop detector. **No grape-specific confidence calibration or OOD rejection is implemented yet.**
+
+### 9. Commit code and metadata to GitHub
 
 ```powershell
 git add v3/ knowledge_base/grapes.json tests/test_grapes_v3.py README_GRAPES_V3.md
