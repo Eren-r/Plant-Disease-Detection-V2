@@ -167,3 +167,37 @@ change `--manifest` to the new `gvlid_v2\manifest.csv` path.
 This is an internal duplicate-aware split, **not** proof of field-independent
 validation. Verified farm/vine/session grouping and independent field testing
 remain necessary before company deployment.
+
+
+### Provisional baseline when cross-label *near* candidates remain unresolved
+
+For the local GVLiD dataset, the revised audit reported **381** cross-label near
+candidates involving **554** distinct images after exact conflicts were quarantined.
+These are candidate similarities, **not confirmed incorrect labels**.
+
+A separate, explicitly opt-in **provisional** path can exclude both ends of
+every flagged cross-label pair, together with their known same-label duplicate
+and source-group mates. **Raw photos are never modified.** The affected images
+are documented in `quarantined.csv`. This option intentionally sacrifices
+coverage and may bias performance; use **only for an internal GPU prototype**.
+
+```powershell
+python -m pytest tests/test_grapes_v3.py -q
+python -m v3.grapes.prepare `
+  --raw-root "data\grapes\raw" `
+  --out-dir "data\grapes\manifests\gvlid_provisional_v1" `
+  --quarantine-exact-conflicts `
+  --quarantine-near-conflicts
+```
+
+Inspect `audit.json` for images retained per class, overall group count,
+exclusion counts and split sizes. If it fails because a class has insufficient
+independent groups, **do not reduce the grouping constraints**. Request source
+review instead. Keep `quarantined.csv` and all source conflict reports.
+
+Once the manifest exists, a one-epoch *internal smoke test* can use
+`data\grapes\manifests\gvlid_provisional_v1\manifest.csv`.
+The resulting weights and metrics must be labelled **provisional**, and
+cannot be used to claim field generalization or production readiness.
+Independent expert review of the original Esca / Leaf Blight labels,
+better provenance and a separate field test are necessary.
