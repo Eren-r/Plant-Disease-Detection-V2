@@ -1,0 +1,73 @@
+name: Docker V3 Smoke Test
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - docker-compose.yml
+      - docker-compose.gpu.yml
+      - app/**
+      - src/**
+      - v3/**
+      - requirements*.txt
+      - .github/workflows/docker-v3.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docker-cpu-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Verify Compose configuration
+        run: docker compose config --quiet
+
+      - name: Build unified CPU image
+        run: docker compose build api
+
+      - name: Create empty local model mount for CI only
+        run: mkdir -p models/grapes
+
+      - name: Start FastAPI and Streamlit containers
+        run: docker compose up -d --no-build
+
+      - name: Verify API routes and Streamlit health
+        run: |
+          set -e
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8000/health >/dev/null && curl -fsS http://127.0.0.1:8501/_stcore/health >/dev/null; then
+              break
+            fi
+            sleep 2
+          done
+          python - <<'PY'
+          import json
+          import urllib.request
+          def get(path):
+              with urllib.request.urlopen("http://127.0.0.1:8000" + path, timeout=10) as response:
+                  return json.load(response)
+          crops = get("/supported-crops")
+          assert crops["crops"] == ["Potato", "Tomato", "Grapes"], crops
+          # No user's locally trained .pth exists in GitHub CI; that's expected.
+          assert crops["grapes_checkpoint_available"] is False, crops
+          assert get("/health")["status"] == "ok"
+          print("Docker V3 endpoints are healthy:", crops)
+          PY
+
+      - name: Container logs on failure
+        if: failure()
+        run: |
+          docker compose ps
+          docker compose logs --tail=100 api
+          docker compose logs --tail=100 streamlit
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down
