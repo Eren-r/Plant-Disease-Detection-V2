@@ -322,7 +322,7 @@ def prepare(raw_root, out_dir, radius=3, groups_csv=None,
         "license": "CC BY 4.0; attribution required",
         "total_valid_source_images": len(records), "images": len(selected),
         "original_class_counts": dict(original_counts), "class_counts": dict(counts),
-        "splits": dict(Counter(r["split"] for r in kept)),
+        "splits": dict(Counter(r["split"] for r in selected)),
         "groups": len(split_groups),
         "quarantined_cross_label_sha_files": len(quarantined) - len(near_quarantined),
         "quarantined_near_candidate_files": len(near_quarantined),
@@ -331,7 +331,7 @@ def prepare(raw_root, out_dir, radius=3, groups_csv=None,
         "cross_label_sha_groups": len(cross_sha),
         "strong_cross_label_pairs": len(strong_conflicts),
         "weak_dhash_candidates_for_review": len(weak_candidates),
-        "verified_source_group_rows": sum(bool(r["source_group"]) for r in kept),
+        "verified_source_group_rows": sum(bool(r["source_group"]) for r in selected),
         "warning": ("Internal grouped evaluation only; weak similarity candidates require "
                     "visual sampling and farm-level validation remains outstanding.")
     }
