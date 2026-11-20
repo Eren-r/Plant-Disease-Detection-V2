@@ -201,3 +201,78 @@ The resulting weights and metrics must be labelled **provisional**, and
 cannot be used to claim field generalization or production readiness.
 Independent expert review of the original Esca / Leaf Blight labels,
 better provenance and a separate field test are necessary.
+
+
+## Unified main dashboard (Potato + Tomato + Grapes)
+
+The `feature/v3-grapes` branch now integrates the locally trained grape model
+into the existing FastAPI + Streamlit dashboard. **It does not replace the V2
+model**. The old `POST /predict` and `POST /explain` routes retain their V2
+contracts. The new `POST /predict-crop` route accepts a form field
+`crop` with one of `Potato`, `Tomato`, or `Grapes`, and an uploaded
+image under `file`. `GET /supported-crops` reports support and whether the
+local Grapes checkpoint exists.
+
+**Local Windows setup — from the main project directory:**
+
+```powershell
+cd "D:\PROGRAMMING\Projects\plant disease detection"
+git status
+git pull --ff-only origin feature/v3-grapes
+.\.venv\Scripts\Activate.ps1
+Test-Path ".\models\grapes\efficientnet_b0_grapes_best.pth"
+python -m pytest tests/test_crop_dashboard.py tests/test_grapes_dashboard_service.py tests/test_api.py -q
+```
+
+The checkpoint test must return `True`. If the file is elsewhere, set
+`GRAPES_MODEL_PATH` in the terminal **before starting FastAPI**, for example:
+
+```powershell
+$env:GRAPES_MODEL_PATH = "D:\PROGRAMMING\Projects\plant disease detection\models\grapes\efficientnet_b0_grapes_best.pth"
+```
+
+Run both services from the main project root, in separate activated terminals:
+
+```powershell
+python -m uvicorn app.api:app --reload --port 8000
+```
+
+```powershell
+python -m streamlit run app/streamlit_app.py --server.port 8501
+```
+
+Open `http://localhost:8501`. In the **Select the crop to analyze**
+dropdown, choose **Potato**, **Tomato**, or **Grapes**, upload a matching
+leaf image, and click **Analyze Leaf**. The single dashboard now routes
+Grapes to the V3 four-class checkpoint; Potato/Tomato remain on the
+calibrated six-class V2 model. For Potato/Tomato, an apparent selected/predicted
+crop mismatch is reported explicitly instead of silently showing a wrong-crop
+disease. For Grapes, only verified grape leaves should be uploaded because
+the crop is assumed from user selection, not automatically detected.
+
+Grapes results have **uncalibrated** scores and a visibly experimental
+warning; V2-only OOD and Grad-CAM are not claimed for the grape model.
+The model loads lazily only when Grapes is first used, so the V2 application
+can still start if the local grape checkpoint is missing. A missing checkpoint
+returns HTTP 503 on a Grapes prediction.
+
+Troubleshooting:
+
+- If the frontend gets HTTP 404 at `/predict-crop`, restart the **FastAPI**
+  server after pulling this branch. The old backend does not have that route.
+- If Grapes returns HTTP 503, verify `Test-Path
+  ".\models\grapes\efficientnet_b0_grapes_best.pth"` and the
+  `GRAPES_MODEL_PATH` environment variable in the API terminal.
+- If a Potato/Tomato choice gets HTTP 422, the existing six-class V2 model
+  predicted the other crop. Inspect the image and selection; this is not
+  automatic crop verification.
+- If ports are in use, stop the existing Streamlit `8501` and FastAPI
+  `8000` processes before restarting.
+- The separate `v3/grapes/demo.py` at `8502` is now optional.
+
+**Validation reminder:** The provisional grape holdout reported about 99.08%
+accuracy and 98.40% macro F1 on its internal grouped split, but 572 images
+were quarantined and verified independent farm grouping was unavailable.
+These are **not** field-ready or production-certification metrics. Review
+the original label conflicts, collect independent vineyard data, and validate
+crop selection, calibration and OOD policies before production deployment.
