@@ -1,4 +1,4 @@
-"""Synthetic, no-dataset tests for the V3 grape module."""
+"""Synthetic regression tests for the conservative Grapes V3 preparation pipeline."""
 import csv
 from pathlib import Path
 
@@ -9,6 +9,18 @@ from PIL import Image
 from v3.grapes.prepare import CLASSES, label_for, prepare
 
 
+def make_dataset(tmp_path):
+    root = tmp_path / "raw"
+    for class_number, label in enumerate(CLASSES):
+        folder = root / label
+        folder.mkdir(parents=True)
+        for i in range(30):
+            rng = np.random.default_rng(class_number * 1000 + i)
+            Image.fromarray(rng.integers(0, 255, (88, 88, 3),
+                                        dtype=np.uint8)).save(folder / f"img{i:03d}.png")
+    return root
+
+
 def test_alias_mapping():
     assert label_for(Path("data/black_rot/sample.jpg")) == "Grapes_Black_rot"
     assert label_for(Path("data/Leaf blight/sample.jpg")) == "Grapes_Leaf_blight"
@@ -16,31 +28,41 @@ def test_alias_mapping():
 
 
 def test_group_disjoint_manifest(tmp_path):
-    root = tmp_path / "raw"
-    for label_index, label in enumerate(CLASSES):
-        folder = root / label
-        folder.mkdir(parents=True)
-        for index in range(30):
-            pixels = np.random.default_rng(label_index * 1000 + index).integers(
-                0, 255, (88, 88, 3), dtype=np.uint8)
-            Image.fromarray(pixels).save(folder / f"{index:03d}.png")
-    out = tmp_path / "manifests"
-    audit = prepare(root, out, radius=0)
+    root = make_dataset(tmp_path)
+    audit = prepare(root, tmp_path / "out", radius=0)
     assert audit["images"] == 120
-    with (out / "manifest.csv").open(newline="", encoding="utf-8") as handle:
-        rows = list(csv.DictReader(handle))
-    assert {row["split"] for row in rows} == {"train", "val", "test"}
-    splits = {}
+    with (tmp_path / "out" / "manifest.csv").open(newline="", encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+    assert {r["split"] for r in rows} == {"train", "val", "test"}
+    groups = {}
     for row in rows:
-        assert splits.setdefault(row["group_id"], row["split"]) == row["split"]
+        assert groups.setdefault(row["group_id"], row["split"]) == row["split"]
 
 
-def test_conflicting_duplicate_labels_rejected(tmp_path):
-    root = tmp_path / "raw"
-    pixels = np.random.default_rng(7).integers(0, 255, (80, 80, 3), dtype=np.uint8)
-    for name in CLASSES:
-        folder = root / name
-        folder.mkdir(parents=True)
-        Image.fromarray(pixels).save(folder / "same.png")
+def test_exact_conflicts_require_opt_in_quarantine(tmp_path):
+    root = make_dataset(tmp_path)
+    original = root / CLASSES[0] / "img000.png"
+    copy = root / CLASSES[1] / "wrong_label.png"
+    copy.write_bytes(original.read_bytes())
     with pytest.raises(ValueError, match="label conflicts"):
-        prepare(root, tmp_path / "manifest", radius=0)
+        prepare(root, tmp_path / "strict", radius=0)
+    audit = prepare(root, tmp_path / "quarantined", radius=0,
+                    quarantine_exact_conflicts=True)
+    assert audit["images"] == 119
+    assert audit["quarantined_cross_label_sha_files"] == 2
+    assert original.exists() and copy.exists()
+    with (tmp_path / "quarantined" / "manifest.csv").open(
+            newline="", encoding="utf-8") as file:
+        rows = list(csv.DictReader(file))
+    present = {r["relative_path"] for r in rows}
+    assert original.relative_to(root).as_posix() not in present
+    assert copy.relative_to(root).as_posix() not in present
+
+
+def test_dhash_collision_does_not_force_label_conflict(tmp_path):
+    root = make_dataset(tmp_path)
+    Image.new("RGB", (88, 88), (20, 20, 20)).save(root / CLASSES[0] / "dark.png")
+    Image.new("RGB", (88, 88), (230, 230, 230)).save(root / CLASSES[1] / "light.png")
+    audit = prepare(root, tmp_path / "colors", radius=0)
+    assert audit["images"] == 122
+    assert audit["weak_dhash_candidates_for_review"] >= 1
